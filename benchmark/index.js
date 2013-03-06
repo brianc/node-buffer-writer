@@ -36,13 +36,16 @@ var clone = function(rev, cb) {
 };
 
 var versions = [
-  'f01e18d'
+  '72a3a12'
 ];
 
 var scripts = fs.readdirSync(__dirname).filter(function(x) {
   return x.indexOf('benchmark') > 0;
 });
 
+if(process.argv[2]) {
+  scripts = [process.argv[2]]
+}
 
 var run = function() {
   async.map(versions, clone, function(err, results) {
@@ -52,15 +55,17 @@ var run = function() {
       for(var i = 0; i < results.length; i++) {
         var result = results[i];
         var benchPath = path.join(result.dir, 'benchmark', script);
-        console.log('requiring ' + benchPath);
-        var bench = require(benchPath);
-        exports.compare[script + '@' + result.rev] = bench;
+        if(fs.existsSync(benchPath)) {
+          var bench = require(benchPath);
+          exports.compare[script + '@' + result.rev] = bench;
+        } else {
+          console.log('%s missing at revision %s', script, result.rev);
+        }
       }
       exports.compare[script + '@HEAD'] = require(__dirname + '/' + script);
     })
     require('bench').runMain();
   });
-
 }
 
 run();
