@@ -1,0 +1,23 @@
+{
+  "name": "buffer-writer",
+  "version": "0.0.0",
+  "description": "a fast, efficient buffer writer",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/brianc/node-buffer-writer.git"
+  },
+  "keywords": [
+    "buffer",
+    "writer",
+    "builder"
+  ],
+  "author": "Brian M. Carlson",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.8.1"
+  }
+}
