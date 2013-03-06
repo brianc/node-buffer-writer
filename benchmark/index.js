@@ -28,10 +28,10 @@ var clone = function(rev, cb) {
 };
 
 var versions = [
-  '9856c7'
+  '14cda8b'
 ];
 
-rmdir(cloned.workingDir, function() {
+var run = function() {
   async.map(versions, clone, function(err, results) {
     if(err) throw err;
     exports.compare = { };
@@ -43,5 +43,14 @@ rmdir(cloned.workingDir, function() {
       var bench = require(benchPath);
       exports.compare[script + '@' + result.rev] = bench;
     }
+    console.log(exports.compare);
+    require('bench').runMain();
   });
-});
+
+}
+
+if(fs.existsSync(cloned.workingDir)) {
+  rmdir(cloned.workingDir, run);
+} else {
+  run();
+}
