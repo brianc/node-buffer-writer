@@ -17,6 +17,14 @@ exports.compare = {
 };
 
 var clone = function(rev, cb) {
+  var outputDir = path.join(cloned.workingDir, rev);
+  console.log(outputDir)
+  if(fs.existsSync(outputDir)) {
+    return cb(null, {
+      rev: rev,
+      dir: outputDir
+    });
+  }
   console.log('cloning version ' + rev);
   cloned(rev, ok(cb, function(dir) {
     console.log('cloned version ' + rev + ' to ' + dir);
@@ -28,29 +36,31 @@ var clone = function(rev, cb) {
 };
 
 var versions = [
-  '14cda8b'
+  'f01e18d'
 ];
+
+var scripts = fs.readdirSync(__dirname).filter(function(x) {
+  return x.indexOf('benchmark') > 0;
+});
+
 
 var run = function() {
   async.map(versions, clone, function(err, results) {
     if(err) throw err;
     exports.compare = { };
-    var script = 'small';
-    for(var i = 0; i < results.length; i++) {
-      var result = results[i];
-      var benchPath = path.join(result.dir, 'benchmark', script);
-      console.log('requiring ' + benchPath);
-      var bench = require(benchPath);
-      exports.compare[script + '@' + result.rev] = bench;
-    }
-    console.log(exports.compare);
+    scripts.forEach(function(script) {
+      for(var i = 0; i < results.length; i++) {
+        var result = results[i];
+        var benchPath = path.join(result.dir, 'benchmark', script);
+        console.log('requiring ' + benchPath);
+        var bench = require(benchPath);
+        exports.compare[script + '@' + result.rev] = bench;
+      }
+      exports.compare[script + '@HEAD'] = require(__dirname + '/' + script);
+    })
     require('bench').runMain();
   });
 
 }
 
-if(fs.existsSync(cloned.workingDir)) {
-  rmdir(cloned.workingDir, run);
-} else {
-  run();
-}
+run();
