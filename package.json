@@ -18,6 +18,15 @@
   "author": "Brian M. Carlson",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "~1.8.1"
+    "mocha": "~1.8.1",
+    "benchmark": "~1.0.0",
+    "microtime": "~0.3.3",
+    "bench": "~0.3.5",
+    "okay": "0.0.2",
+    "rmdir": "~1.0.0"
+  },
+  "dependencies": {
+    "cloned": "0.0.1",
+    "async": "~0.2.6"
   }
 }

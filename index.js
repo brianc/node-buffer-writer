@@ -1,7 +1,7 @@
 //binary data writer tuned for creating
 //postgres message packets as effeciently as possible by reusing the
 //same buffer to avoid memcpy and limit memory allocations
-var Writer = function(size) {
+var Writer = module.exports = function(size) {
   this.size = size || 1024;
   this.buffer = Buffer(this.size + 5);
   this.offset = 5;
@@ -124,5 +124,3 @@ Writer.prototype.flush = function(code) {
   this.clear();
   return result;
 };
-
-module.exports = Writer;
