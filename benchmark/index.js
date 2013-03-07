@@ -36,7 +36,7 @@ var clone = function(rev, cb) {
 };
 
 var versions = [
-  '72a3a12'
+  'ae11b77'
 ];
 
 var scripts = fs.readdirSync(__dirname).filter(function(x) {
@@ -47,25 +47,41 @@ if(process.argv[2]) {
   scripts = [process.argv[2]]
 }
 
+var bench = require('bench');
+
 var run = function() {
   async.map(versions, clone, function(err, results) {
     if(err) throw err;
     exports.compare = { };
+    var suites = [];
     scripts.forEach(function(script) {
       for(var i = 0; i < results.length; i++) {
         var result = results[i];
         var benchPath = path.join(result.dir, 'benchmark', script);
+        var suite = {};
+        suites.push(suite);
         if(fs.existsSync(benchPath)) {
           var bench = require(benchPath);
-          exports.compare[script + '@' + result.rev] = bench;
+          suite[script + '@' + result.rev] = bench;
         } else {
-          console.log('%s missing at revision %s', script, result.rev);
+          console.log('%s missing at revision %s', benchPath, result.rev);
         }
       }
-      exports.compare[script + '@HEAD'] = require(__dirname + '/' + script);
+      suite[script + '@HEAD'] = require(__dirname + '/' + script);
+    });
+    var compare = function(suite, cb) {
+      console.log('running...')
+      bench.compare(suite, null, null, null, function(err, data) {
+        console.log('suite done...')
+        if(err) return cb(err);
+        bench.show(data);
+        cb(null);
+      });
+    }
+    async.eachSeries(suites, compare, function(err, res) {
+      console.log('all suites done')
     })
-    require('bench').runMain();
   });
-}
+};
 
 run();
