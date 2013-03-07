@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
 
+var bench = require('bench');
 var async = require('async');
 var rmdir = require('rmdir');
 var ok = require('okay');
@@ -36,7 +37,7 @@ var clone = function(rev, cb) {
 };
 
 var versions = [
-  'ae11b77'
+  'ef599d3'
 ];
 
 var scripts = fs.readdirSync(__dirname).filter(function(x) {
@@ -47,7 +48,6 @@ if(process.argv[2]) {
   scripts = [process.argv[2]]
 }
 
-var bench = require('bench');
 
 var run = function() {
   async.map(versions, clone, function(err, results) {
@@ -72,7 +72,6 @@ var run = function() {
     var compare = function(suite, cb) {
       console.log('running...')
       bench.compare(suite, null, null, null, function(err, data) {
-        console.log('suite done...')
         if(err) return cb(err);
         bench.show(data);
         cb(null);
