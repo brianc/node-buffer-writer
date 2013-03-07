@@ -1,6 +1,6 @@
 {
   "name": "buffer-writer",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "a fast, efficient buffer writer",
   "main": "index.js",
   "scripts": {
