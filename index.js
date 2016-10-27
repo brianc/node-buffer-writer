@@ -3,7 +3,7 @@
 //same buffer to avoid memcpy and limit memory allocations
 var Writer = module.exports = function(size) {
   this.size = size || 1024;
-  this.buffer = Buffer(this.size + 5);
+  this.buffer = new Buffer(this.size + 5);
   this.offset = 5;
   this.headerPosition = 0;
 };
