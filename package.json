@@ -26,5 +26,8 @@
     "cloned": "0.0.1",
     "rmdir": "~1.0.0",
     "async": "~0.2.6"
+  },
+  "dependencies": {
+    "buffer-alloc-unsafe": "~1.0.0"
   }
 }

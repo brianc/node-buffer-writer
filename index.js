@@ -1,9 +1,11 @@
+var bufferAllocUnsafe = require('buffer-alloc-unsafe')
+
 //binary data writer tuned for creating
 //postgres message packets as effeciently as possible by reusing the
 //same buffer to avoid memcpy and limit memory allocations
 var Writer = module.exports = function(size) {
   this.size = size || 1024;
-  this.buffer = Buffer(this.size + 5);
+  this.buffer = bufferAllocUnsafe(this.size + 5);
   this.offset = 5;
   this.headerPosition = 0;
 };
@@ -16,7 +18,7 @@ Writer.prototype._ensure = function(size) {
     // exponential growth factor of around ~ 1.5
     // https://stackoverflow.com/questions/2269063/buffer-growth-strategy
     var newSize = oldBuffer.length + (oldBuffer.length >> 1) + size;
-    this.buffer = new Buffer(newSize);
+    this.buffer = bufferAllocUnsafe(newSize);
     oldBuffer.copy(this.buffer);
   }
 };
