@@ -133,7 +133,7 @@ test('gets correct byte length', function() {
 test('can add arbitrary buffer to the end', function() {
   var subject = new Writer(4);
   subject.addCString("!!!")
-  var result = subject.add(Buffer("@@@")).join();
+  var result = subject.add(new Buffer("@@@")).join();
   assert.equalBuffers(result, [33, 33, 33, 0, 0x40, 0x40, 0x40]);
 });
 
