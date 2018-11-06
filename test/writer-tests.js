@@ -12,13 +12,13 @@ assert.equalBuffers = function (actual, expected) {
   };
   if (actual.length != expected.length) {
     spit(actual, expected);
-    assert.equal(actual.length, expected.length);
+    assert.strictEqual(actual.length, expected.length);
   }
   for (var i = 0; i < actual.length; i++) {
     if (actual[i] != expected[i]) {
       spit(actual, expected);
     }
-    assert.equal(actual[i], expected[i]);
+    assert.strictEqual(actual[i], expected[i]);
   }
 };
 
@@ -123,11 +123,11 @@ test('writes char', function () {
 
 test('gets correct byte length', function () {
   var subject = new Writer(5);
-  assert.equal(subject.getByteLength(), 0);
+  assert.strictEqual(subject.getByteLength(), 0);
   subject.addInt32(0);
-  assert.equal(subject.getByteLength(), 4);
+  assert.strictEqual(subject.getByteLength(), 4);
   subject.addCString("!");
-  assert.equal(subject.getByteLength(), 6);
+  assert.strictEqual(subject.getByteLength(), 6);
 });
 
 test('can add arbitrary buffer to the end', function () {
