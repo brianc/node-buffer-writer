@@ -16,7 +16,7 @@ Writer.prototype._ensure = function (size) {
     // exponential growth factor of around ~ 1.5
     // https://stackoverflow.com/questions/2269063/buffer-growth-strategy
     var newSize = oldBuffer.length + (oldBuffer.length >> 1) + size;
-    this.buffer = new Buffer.alloc(newSize);
+    this.buffer = Buffer.alloc(newSize);
     oldBuffer.copy(this.buffer);
   }
 };
