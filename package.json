@@ -19,5 +19,8 @@
   "license": "MIT",
   "devDependencies": {
     "mocha": "5.2.0"
+  },
+  "engines": {
+    "node": ">=4"
   }
 }
