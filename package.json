@@ -6,10 +6,7 @@
   "scripts": {
     "test": "mocha --throw-deprecation"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/brianc/node-buffer-writer.git"
-  },
+  "repository": "brianc/node-buffer-writer",
   "keywords": [
     "buffer",
     "writer",
