@@ -4,7 +4,7 @@
   "description": "a fast, efficient buffer writer",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --throw-deprecation"
   },
   "repository": {
     "type": "git",
@@ -18,13 +18,9 @@
   "author": "Brian M. Carlson",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "~1.8.1",
-    "benchmark": "~1.0.0",
-    "microtime": "~0.3.3",
-    "bench": "~0.3.5",
-    "okay": "0.0.2",
-    "cloned": "0.0.1",
-    "rmdir": "~1.0.0",
-    "async": "~0.2.6"
+    "mocha": "5.2.0"
+  },
+  "engines": {
+    "node": ">=4"
   }
 }
